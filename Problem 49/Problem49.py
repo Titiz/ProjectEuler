@@ -96,25 +96,3 @@ if __name__ == "__main__":
         print("BEFORE:", candidate.previous)
         print("AFTER: ", candidate.next)
         print("STRING:", str(candidate.previous) + str(candidate.value) + str(candidate.next)) #Final answer is printed here.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
