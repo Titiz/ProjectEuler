@@ -29,7 +29,7 @@ int give_letter_length(int n){
         it ++;
         std::string::iterator it2 = it;
         it2 ++;
-        if (*it != '0' && *it2 != '0') {
+        if (*it != '0' || *it2 != '0') {
             length += 3; // and
             std::cout <<  "and" << std::endl;
             std::cout << "LENGTH UP TO NOW: " << length << std::endl;
@@ -45,7 +45,7 @@ int give_letter_length(int n){
         length += tens[(int) *it - 49].length();
         std:: cout << tens[(int) *it - 49] << std::endl;
         it++;
-    } }
+    } else it ++; } 
 
     std::cout << "LENGTH UP TO NOW: " <<length << std::endl;
 
@@ -70,6 +70,5 @@ int main() {
     }
     std::string one_thousand = "onethousand";
     std::cout <<"TOTAL LENGTH: " << total_length + one_thousand.length();
-
     return 0;
 }
