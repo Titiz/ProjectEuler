@@ -21,10 +21,7 @@ def is_permutation(prime1, prime2):
         return True
     return False
 
-def is_arithmetic(prime1, prime2, prime3):
-    if prime2.value - prime1.value == prime3.value - prime2.value:
-        return True
-    return False
+# Define a function to find all the permutations of a given prime
 
 def find_permutable_primes(primes):
     for i in range(len(primes)):
@@ -40,12 +37,15 @@ def find_permutable_primes(primes):
             string += str(item.value) +  ", " 
         print(string)
 
+
+# Define a function to remove all primes that have less than 3 primes:
 def remove_unpermutable_primes(primes):
     for prime in primes:
         if len(prime.permutations) < 3:
             primes.remove(prime)
 
-def find_distances_to_permutations(primes):
+# Define find all primes that fit our criteria using the remaining primes
+def find_candidates(primes):
     candidates = []
     for prime in primes:
         for i in range(len(prime.permutations)):
@@ -67,6 +67,7 @@ def find_distances_to_permutations(primes):
 if __name__ == "__main__":
     primes = []
 
+    # Use a lazy way to find all primes
     i = 1001
     j = 3
     while (i < 10000):
@@ -87,17 +88,15 @@ if __name__ == "__main__":
             j = 2
             i+= 1
 
-    for prime in primes:
-        print(prime.value)
     find_permutable_primes(primes)
     remove_unpermutable_primes(primes)
-    candidates = find_distances_to_permutations(primes)
+    candidates = find_candidates(primes)
     for candidate in candidates:
         print("VALUE:", candidate.value)
         print("BEFORE:", candidate.previous)
         print("AFTER: ", candidate.next)
-        print("STRING:", str(candidate.previous) + str(candidate.value) + str(candidate.next))
-            
+        print("STRING:", str(candidate.previous) + str(candidate.value) + str(candidate.next)) #Final answer is printed here.
+
 
 
 
