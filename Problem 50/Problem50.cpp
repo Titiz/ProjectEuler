@@ -1,79 +1,57 @@
-#include <list>
+#include <vector>
 #include <iostream>
 #include <math.h> 
+#include <time.h>
+
+// This response is edited after viewing responses on the Euler page. 
+// Heavily influenced by Vasil Raev's response.
+
+#define N 1000000
 
 
 
-
-
-
-std::list<int> Sieve(int n) {
-    std::list<int> list_of_primes;
-    for (int i = 2; i < n; i++) list_of_primes.push_back(i);
-    int p = 2;
-    std::list<int>::const_iterator it = list_of_primes.begin();
-    while (p < sqrt(list_of_primes.back())){
-    list_of_primes.remove_if([p](int n){ return n % p == 0 && n != p; });
-    it ++;
-    std::cout << "CURRENT PRIME:" << p << std::endl; 
-    p = *it;
+void Sieve(std::vector<int> &list_of_primes, bool primes[]) {
+    for(int i = 0 ; i < N ; i++) {
+        primes[i] = true;
     }
-    return list_of_primes;
+    for(long long j = 2 ; j < N ; j++)
+            if (primes[j]){
+                list_of_primes.push_back(j);
+                for(long long t = j*j ; t<N ; t+=j){
+                        primes[t] = false;
+               }
+        }
 }
 
-void find_consecutive_prime_sum(std::list<int>::const_iterator it, std::list<int> primes, int &biggest_count, int &prime, int max_length){
-    int sum = 0;
-    int count = 0;
-    int iteration_count = 0;
-    int p = *it;
-    std::cout << "CURRENTLY TESTING: " << p << std::endl;
-    while(true) {
-        iteration_count ++;
-        sum += *it;
-        if (sum > 1000000) break;
-        it++;
-        count++;
-    }
-    sum -= *it;
-    while(true) {
-        
-        
-
-        if (count < biggest_count) {
-            return;
+int main() {   
+    std::vector<int> primes; 
+    bool prime_bool[N] ;
+    Sieve(primes, prime_bool);
+    int biggest_sum = 0, biggest_count = 0, sum = 0, count = 0;
+    for (int i = 2; i < primes.size(); i++, sum = 0, count = 0) {
+        int j = i-1;
+        while (sum + primes[j] < N) {
+            sum += primes[j];
+            count ++;
+            j++;
         }
-        if (std::find(primes.begin(), primes.end(), sum) != primes.end()) {
-            p = *it;
-            biggest_count = count;
-            prime = sum;
-            return;
-        } else {
-            count -= 1;
-            it --;
-            sum -= *it;
+        while (true) {
+            if (count < biggest_count || sum < biggest_sum) break;
+            if (prime_bool[sum] && sum >= biggest_sum) {
+                biggest_sum = sum;
+                biggest_count = count;
+                break;
+            } else {
+                count -= 1;
+                j -= 1;
+                sum -= primes[j];
+            }
         }
     }
-}
 
-int main() {
+   
+    std::cout << biggest_count << std::endl;
+    std::cout << biggest_sum << std::endl;
 
-    std::list<int> primes = Sieve(1000000);
-    int biggest_sequence = 0;
-    int prime = 0;
-
-    int max_length = 0;
-    int summation = 0;
-    std::list<int>::const_iterator it = primes.begin();
-    while(summation + *it < 1000000) {
-        summation += *it;
-        it ++;
-        max_length += 1;
-    }
-
-    for (std::list<int>::const_iterator it = primes.begin(); it != primes.end(); it++) {
-        if (*it > 1000000) break;
-        find_consecutive_prime_sum(it, primes, biggest_sequence, prime, max_length);
-    }
-    std::cout << prime;
     return 0;
 }
