@@ -39,18 +39,9 @@ void shift_by_one(int *array, int length) {
     }
 }
 
-void print_out_array(int *array, int length) {
-    for(int i = 0; i < length; i++) {
-        //std::cout << array[i] << " ";
-    }
-    //std::cout << std::endl;
-}
-
 bool is_circular_prime(long long prime, bool primes_bools[])
 {
-    //std::cout << "P: "<< prime << std::endl;
     int length = get_length_of_number(prime);
-    //std::cout << "L: "<< length << std::endl;
     int *digits = new int[length];
     int divisor = 1;
     for (int k = 0; k < length; k++) {
@@ -58,9 +49,8 @@ bool is_circular_prime(long long prime, bool primes_bools[])
         int result = int(prime/divisor);
         digits[k] = result;
         prime -= result * pow(10, length-k-1);
-        //std::cout << "D: " << divisor << std::endl ;
     }
-    print_out_array(digits, length);
+    
     for (int i = 0; i < length; i++) {
         shift_by_one(digits, length);
         int value = 0;
