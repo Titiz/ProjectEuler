@@ -13,14 +13,9 @@ int main()
     int closest_value = 0;
     while (true) {
         total_ways = 0;
-        for (int width = 1; width <= l1; width++)
-        {
-            for (int height = 1; height <= l2; height++)
-            {
-                total_ways += (l1 - width + 1) * (l2 - height +1);
-            }
-        }
         
+        total_ways = (l1 * (l1 + 1))/2 * (l2 * (l2 + 1))/2;  // Combinatorics way of calculating the total number of squares.
+
         if (l1 >= upper) break;
         
         if (total_ways > closest_value && total_ways < N) {
