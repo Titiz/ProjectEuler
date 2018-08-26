@@ -25,3 +25,60 @@ typedef long long int ll;
 #define P 1000000007ll
 #define A 100ll
 
+int digit_count[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+set<ll> s;
+
+void countDigits(ll number)
+{
+    ll place = 0;
+    ll temp = number;
+    while ((number % (int)pow(10, place)) != number)
+    {
+        int digit = temp % 10;
+        // cout << digit << endl;
+        digit_count[digit]++;
+        temp /= 10;
+        place++;
+    }
+    // cout << endl;
+}
+
+bool checkPandigital(ll a1, ll a2)
+{
+    for (int i = 0; i < 10; i++)
+        digit_count[i] = 0;
+    ll product = a1 * a2;
+    if (product > 100000000)
+        return false;
+    countDigits(a1);
+    countDigits(a2);
+    countDigits(product);
+    if (digit_count[0] != 0)
+        return false;
+    for (int i = 1; i < 10; i++)
+        if (digit_count[i] != 1)
+            return false;
+    return true;
+}
+
+int main()
+{
+
+    for (ll i = 1; i < 50; i++)
+    {
+        for (ll j = i; j < 2000; j++)
+        {
+            if (checkPandigital(i, j))
+            {
+                cout << i << " * " << j << " = " << i * j << endl;
+                s.insert(i * j);
+            }
+        }
+    }
+    ll sum = 0;
+    for (ll number : s)
+    {
+        sum += number;
+    }
+    cout << sum << endl;
+}
